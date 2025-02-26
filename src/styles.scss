@@ -1,0 +1,322 @@
+/* You can add global styles to this file, and also import other style files */
+$blue: #0162da;
+$grey: #3e3e3e;
+$dark-grey: #282c34;
+$white: #ffffff;
+$grey-p0: #edf3f8;
+$box-shadow-sm: 0 .125rem .25rem rgba(#000000, .075);
+$grey-p1: #343a40;
+
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: $white;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-image: linear-gradient(to right, #ffffff, #282c34);
+    background-image: url(/cons_bg.png);
+    
+    .text-wrap {
+        word-wrap: break-word;
+        white-space: normal;
+        overflow-wrap: break-word;
+      }
+
+    .nav-bg {
+        // background-color: $dark-grey;
+        // background-image: linear-gradient(to right, #ffffff, #282c34);
+        position: sticky;
+
+        .nav-link {
+            color: $dark-grey !important;
+            font-size: 1.2em;
+            margin-right: 10px;
+            text-decoration: none;
+            font-size: 12px;
+
+            &:hover {
+                cursor: pointer;
+                ;
+            }
+
+            &:active {
+                color: $white !important;
+            }
+        }
+    }
+
+    .scorecard-container,
+    .kuiperlinuxci-container {
+        position: relative;
+        margin: 1%;
+        // background-image: linear-gradient(to right, #ffffff, #282c34);
+        border-radius: 10px;
+        box-shadow: $box-shadow-sm;
+        // background-color: #ffffff00;
+
+
+
+        .first-section {
+            text-align: left;
+            padding: 25px;
+
+
+
+            .page-title {
+                font-size: 22px;
+                font-weight: 600;
+                color: #FFC20E;
+
+            }
+
+            .page-desc {
+                font-size: 14px;
+
+            }
+
+            .latest-summary {
+                font-size: 18px;
+                font-weight: 500;
+                padding-top: 5px;
+            }
+
+            .jenkins-details {
+                font-size: 14px;
+
+                .jenkins-table-details {
+                    width: 100%;
+                    margin-bottom: 10px;
+
+                    td {
+                        padding: 7px 0;
+                    }
+
+                    .field {
+                        font-weight: 500;
+
+                        .info-icon {
+                            color: $grey;
+                            cursor: pointer;
+                            background-color: transparent;
+                            border-style: none;
+                        }
+                    }
+
+                }
+
+                .jenkins-table-testlogo {
+                    .field-stat {
+                        font-weight: 500;
+                        font-size: 18px;
+
+                        .icons {
+                            width: 50px;
+                        }
+                    }
+
+                    .spacer {
+                        padding-left: 25px;
+                    }
+                }
+
+            }
+
+            .search-container {
+                padding-top: 15px;
+                text-align: right;
+                vertical-align: middle;
+            }
+
+            form input {
+                padding: 8px;
+                width: 350px;
+                /* Adjust the width of the search bar as needed */
+                font-size: 14px;
+                border: 1px solid rgb(219, 215, 215);
+                border-radius: 10px;
+                outline: none;
+            }
+        }
+
+        .second-section {
+            .jenkins-table {
+                max-height: 600px;
+                font-size: 14px;
+                height: auto;
+                width: 100%;
+                display: inline-block;
+                background-color: #ffffff;
+                border-radius: 0 0 10px 10px;
+                position: relative;
+                overflow-y: auto;
+                border-collapse: collapse;
+                border-spacing: 1px;
+                margin-bottom: 50px;
+
+
+
+                .table {
+                    // border-top: 1px solid #E5E5E5;
+                    width: 100%;
+                    border-collapse: collapse;
+
+
+                    .table-head,
+                    thead,
+                    th {
+                        font-weight: normal !important;
+                        text-align: center;
+                        padding: 10px;
+                        z-index: 1;
+                        background-color: $grey-p1;
+                        color: $white;
+                    }
+
+                    th {
+                        position: sticky;
+                        top: 0;
+
+                    }
+
+                    .sort-btn {
+                        font-weight: 900;
+                        color: $grey;
+                    }
+
+                    tbody>tr:hover {
+                        background-color: #3e3e3e;
+                        outline: none;
+                        cursor: pointer;
+                        color: #ffffff;
+                    }
+
+                    .table-output {
+
+                        text-align: center;
+                        vertical-align: middle;
+
+
+                        .status-icon {
+                            padding-right: 10px;
+                            cursor: pointer;
+
+                            .stat-icon {
+                                margin: 10px;
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 50px;
+    font-size: 14px;
+    background-color: #343a40;
+
+    .footer-content {
+        padding: 10px 40px;
+        
+        .rights-reserve{
+            text-align: left;
+            vertical-align: middle;
+
+        }
+        a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        a:hover {
+            cursor:pointer;
+        }
+        .report{
+            text-align: right;
+            vertical-align: middle;
+
+        }
+    }
+}
+/* Tooltip container */
+/* Tooltip container */
+.status-details {
+    padding: 5px; /* More padding for better spacing */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for a floating effect */
+    max-width: 350px; /* Increased width */
+    text-align: center; /* Center text */
+  }
+  
+  /* Row spacing */
+  .status-details .row {
+    margin-bottom: 10px; /* Adds spacing between rows */
+    display: flex;
+    align-items: center;
+    justify-content: space-around; /* Spread content evenly */
+  }
+  
+  /* Status icons container */
+  .status-icons-table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+  }
+  
+  /* Icons inside the tooltip */
+  .status-icons-table img {
+    width: 40px; /* Increased icon size */
+    height: auto;
+  }
+  
+  /* Status text styles */
+  .status-head {
+    font-size: 14px; /* Bigger text for better readability */
+    font-weight: bold;
+    color: $white; /* Dark text */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 500px) {
+    .status-details {
+      max-width: 280px;
+    }
+    
+    .status-icons-table img {
+      width: 30px;
+    }
+  
+    .status-head {
+      font-size: 14px;
+    }
+  }
+  

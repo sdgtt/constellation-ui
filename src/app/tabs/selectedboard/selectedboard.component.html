@@ -1,0 +1,203 @@
+<section class="boardHead-container custom-margin">
+    <div class="board-head">
+        <div class="board-top ">
+            <div class="row ">
+                <div class="col-8">
+                    <div class="board-name">
+                        <a class="backBtn" routerLink="/kuiperlinuxci" routerLinkActive="nav-link-active">
+                            <span class="label-space"><i class="fa-solid fa-house"></i></span>
+                        </a>
+                        {{this.selectedBoard}}
+                    </div>
+                    <div class="board-label">Board Name</div>
+                </div>
+                <div class="col-4">
+                    <div class="search-container">
+                        <!-- <form>
+                            <input type="text" placeholder="Search" [(ngModel)]="searchText"
+                                (keyup)="filterResults(searchText)" (keydown.enter)="filterResults(searchText)"
+                                name="search" />
+                        </form> -->
+                            <!-- Search Bar -->
+                            
+                          
+                            <!-- Artifactory Source Branch Dropdown -->
+                           
+                            <form>
+                                <select [(ngModel)]="selectedBranch" (change)="filterResults()" class="form-select" style="width: 200px;">
+                                    <option *ngFor="let branch of availableBranches" [value]="branch">
+                                      {{ branch }}
+                                    </option>
+                                  </select>
+                                <input
+                              type="text"
+                              [(ngModel)]="searchText"
+                              (input)="filterResults()"
+                              placeholder="Search..."
+                        
+                            />
+                            </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    
+                      
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid ">
+        <div class="table-container">
+            <div class="board-table">
+                <div *ngIf="displayedHistory.length > 0; else noData"
+                    class="boardheader row py-2 text-center d-none d-md-flex">
+                    <div class="col-md-1 col-12">Job Date</div>
+                    <div class="col-md-1 col-12 text-wrap">Artifactory source branch
+                        
+                    </div>
+                    <div class="col-md-1 col-12">Trigger</div>
+                    <div class="col-md-1 col-12">HDL Commit</div>
+                    <div class="col-md-1 col-12">Linux Commit</div>
+                    <div class="col-md-1 col-12">Build Number</div>
+                    <div class="col-md-1 col-12 text-wrap">U-boot Reached</div>
+                    <div class="col-md-1 col-12 text-wrap">Linux Booted</div>
+                    <div class="col-md-1 col-12">Linux Test</div>
+                    <div class="col-md-1 col-12">Pyadi Tests</div>
+                    <div class="col-md-1 col-12">Artifacts</div>
+                    <div class="col-md-1 col-12">Results</div>
+                </div>
+                <div *ngFor="let board of displayedHistory; let i = index"
+                    class="row border-bottom py-2 align-items-center text-center d-none d-md-flex table-hover">
+                    <ng-container *ngIf="board.boot_folder_name">
+                        <div class="col-md-1 col-12 text-wrap">
+                            {{ board.jenkins_job_date | date: 'y-M-d' }} <br>
+                            {{ board.jenkins_job_date | date: 'HH:mm:ss' }}
+                        </div>
+                        <div class="col-md-1 col-12 text-wrap text-break overflow-hidden">{{
+                            board.source_adjacency_matrix
+                            }}</div>
+                        <div class="col-md-1 col-12 text-wrap text-break overflow-hidden"> <a
+                                class="board-link d-block w-100" [href]="board.trigger_url" target="_blank"> {{
+                                board.jenkins_trigger | removePrefix }}
+                            </a>
+                        </div>
+                        <div class="col-md-1 col-12 text-wrap">
+                            <a class="board-link d-block w-100" [href]="board.hdl_commit_url" target="_blank"> {{
+                                board.hdl_hash }} </a>
+                        </div>
+                        <div class="col-md-1 col-12 text-wrap">
+                            <a class="board-link" [href]="board.linux_commit_url" target="_blank"> {{
+                                board.linux_hash }} </a>
+                        </div>
+                        <div class="col-md-1 col-12 text-wrap" *ngFor="let key of ['jenkins_build_number_url'] ">
+                            <a class="board-link"  [href]="board[key]" target="_blank">{{ board.jenkins_build_number }}</a></div>
+                        <div class="col-md-1 col-12 text-wrap d-flex justify-content-center align-items-center">
+                            <ng-container *ngIf="board.linux_prompt_reached == true">
+                                <i class="fa-solid fa-thumbs-up" ></i>
+                                <!-- <img src="/thumbs-up.svg" class="icons"> -->
+                            </ng-container>
+                            <ng-container *ngIf="board.linux_prompt_reached == false">
+                                <i class="fa-solid fa-thumbs-down" ></i> 
+                                <!-- <img src="/thumbs-down.svg" class="icons"> -->
+                            </ng-container>
+                        </div>
+                        <div class="col-md-1 col-12 text-wrap d-flex justify-content-center align-items-center">
+                            <ng-container *ngIf="board.linux_prompt_reached == true">
+                                <i class="fa-solid fa-thumbs-up" ></i>
+                                <!-- <img src="/thumbs-up.svg" class="icons"> -->
+                            </ng-container>
+                            <ng-container *ngIf="board.linux_prompt_reached == false">
+                                <i class="fa-solid fa-thumbs-down" ></i>
+                                <!-- <img src="/thumbs-down.svg" class="icons"> -->
+                            </ng-container>
+                        </div>
+                        <div class="col-md-1 col-12 text-wrap d-flex justify-content-center align-items-center">
+                            <a class="board-link" [href]="board.linux_tests_dmesg_url" target="_blank"> 
+                                <i class="fa-solid fa-envelope-open-text"></i>
+                                <!-- <img src="/dmesg.svg" class="icons">  -->
+                                {{ board.dmesg_errors_found }} 
+                            </a>
+                            <a class="board-link" [href]="board.linux_tests_drivers_url" target="_blank"> 
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                                <!-- <img src="/driver_missing.svg" class="icons">  -->
+                                {{ board.drivers_missing }} 
+                            </a>
+                        </div>
+                        <!-- <div class="col-md-1 col-12 text-wrap">
+                            
+                        </div> -->
+                        <div class="col-md-1 col-12 text-wrap d-flex justify-content-center align-items-center">
+                            <div class="a" *ngFor="let key of ['pyadi_tests_url']">
+                                <a class="board-link" [href]="board[key]" target="_blank">
+                                    <i class="fa-solid fa-check"></i>
+                                    <!-- <img src="/passed_icon.svg" class="icons"> -->
+                                    {{ board.pytest_tests }}
+                                </a>
+                                <br>
+                                <a class="board-link" [href]="board[key]" target="_blank">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    <!-- <img src="/failed_icon.svg" class="icons"> -->
+                                    {{ board.pytest_failures }}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-12 text-wrap d-flex justify-content-center align-items-center">
+                            <span class="a" *ngFor="let key of ['uart_boot_log_url'] ">
+                                <a class="board-link" [href]="board[key]" target="_blank">
+                                    <i class="fa-solid fa-rectangle-list"></i>
+                                    <!-- <img src="/uart.svg" class="icons"> -->
+                                </a>
+                            </span>
+                            <span class="spacer"></span>
+                            <span class="a" *ngFor="let key of ['adi_diagnostic_report_url'] ">
+                                <a class="board-link" [href]="board[key]" target="_blank">
+                                    <i class="fa-solid fa-stethoscope"></i>
+                                    <!-- <img src="/diagnostic.svg" class="icons"> -->
+                                    </a>
+                            </span>
+                        </div>
+                        <div class="col-md-1 col-12 text-wrap d-flex justify-content-center align-items-center"
+                            *ngFor="let key of ['linux_tests_drivers_url'] ">
+                            <a class="board-link" [href]="board[key]" target="_blank">{{ board.boot_test_result }}</a>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="nav-container">
+            <!-- Pagination Controls -->
+            <nav *ngIf="getTotalPages() > 1" aria-label="Page navigation">
+                <ul class="pagination custom-pagination pagination-sm justify-content-end mb-3">
+                    <!-- Previous Button -->
+                    <li class="page-item text-$grey" [class.disabled]="currentPage === 1">
+                        <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(currentPage - 1)"
+                            aria-label="Previous">
+                            <span aria-hidden="true"><i class="fa-solid fa-backward"></i></span>
+                        </a>
+                    </li>
+                    <!-- Page Numbers -->
+                    <li *ngFor="let page of getPaginationRange()" class="page-item"
+                        [class.active]="currentPage === page" [class.disabled]="page === '...'">
+                        <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(page)"
+                            *ngIf="page !== '...'">{{ page }}</a>
+                        <span class="page-link" *ngIf="page === '...'"><i class="fa-solid fa-ellipsis"></i></span>
+                    </li>
+                    <!-- Next Button -->
+                    <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
+                        <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(currentPage + 1)"
+                            aria-label="Next">
+                            <span aria-hidden="true"><i class="fa-solid fa-forward"></i></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+<ng-template #noData>
+    <p>No history found for this board.</p>
+</ng-template>
