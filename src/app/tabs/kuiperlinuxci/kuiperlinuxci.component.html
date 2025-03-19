@@ -36,10 +36,10 @@
                                     <div class="status-details">
                                         <div class="row">
                                             <div class="col-4">
-                                                <div class="status-icon-table"><img src="/Online.png" /></div>
+                                                <div class="status-icon-table"><img src="/assets/Online.png" /></div>
                                             </div>
                                             <div class="col-4">
-                                                <div class="status-icon-table"><img src="/Offline.png" /></div>
+                                                <div class="status-icon-table"><img src="/assets/Offline.png" /></div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -52,10 +52,10 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-4">
-                                                <div class="status-icon-table"><img src="/Passed.png" /></div>
+                                                <div class="status-icon-table"><img src="/assets/Passed.png" /></div>
                                             </div>
                                             <div class="col-4">
-                                                <div class="status-icon-table"><img src="/nebula.svg" /></div>
+                                                <div class="status-icon-table"><img src="/assets/nebula.svg" /></div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -68,10 +68,10 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-4">
-                                                <div class="status-icon-table"><img src="/linux.svg" /></div>
+                                                <div class="status-icon-table"><img src="/assets/linux.svg" /></div>
                                             </div>
                                             <div class="col-4">
-                                                <div class="status-icon-table"><img src="/python.svg" /></div>
+                                                <div class="status-icon-table"><img src="/assets/python.svg" /></div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -84,7 +84,7 @@
                                         </div>
                                     </div>
                                 </ng-template>
-                                <button #tooltipLink type="button" class="info-icon" data-bs-toggle="tooltip">
+                                <button aria-label="tooltip-info" #tooltipLink type="button" class="info-icon" data-bs-toggle="tooltip">
                                     <i class="fa-solid fa-circle-info"></i>
                                   </button>
 
@@ -107,13 +107,13 @@
                         <table class="jenkins-table-testlogo">
                             <tr class="t-row">
                                 <td class="field-stat">
-                                    <img src="/passed_icon.svg" class="icons" /> {{ this.passingBoardsCount }}
+                                    <img src="/assets/passed_icon.svg" class="icons" /> {{ this.passingBoardsCount }}
                                     <span class="unit">Passing board</span>
                                     <span class="spacer"></span>
-                                    <img src="/pytestFailed.svg" class="icons" /> {{ this.pytestBoardsCount }}
+                                    <img src="/assets/pytestFailed.svg" class="icons" /> {{ this.pytestBoardsCount }}
                                     <span class="unit">Pytest Error</span>
                                     <span class="spacer"></span>
-                                    <img src="/dmesgerr.svg" class="icons" /> {{ this.linuxBoardsCount }}
+                                    <img src="/assets/dmesgerr.svg" class="icons" /> {{ this.linuxBoardsCount }}
                                     <span class="unit">Dmesg Error/ Driver Missing</span>
                                     <ng-template #passedlogo>
                                         <div class="board-tooltip">
@@ -158,7 +158,7 @@
                         <form>
                             <input type="text" placeholder="Search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"
                                 (keyup)="filterResults(searchText)" (keydown.enter)="filterResults(searchText)"
-                                name="search" />
+                                name="search" [ngModelOptions]="{standalone: true}"/>
                         </form>
                     </div>
                 </div>
@@ -174,7 +174,7 @@
                         <th class="table-head"> Item no</th>
                         <th class="table-head">Job Date
                             <span class="status-icon">
-                                <a type="button" class="sort-btn" (click)="toggleSortOrder()">
+                                <a type="button" aria-label="toggle"class="sort-btn" (click)="toggleSortOrder()">
                                     <i *ngIf="sortOrder === 'desc'" class="fas fa-sort-down"></i>
                                     <i *ngIf="sortOrder === 'asc'" class="fas fa-sort-up"></i>
                                 </a>
@@ -183,7 +183,7 @@
                         <th class="table-head">Board</th>
                         <th class="table-head">Build
                             <span class="status-icon">
-                                <a type="button" class="sort-btn" (click)="toggleSortOrder()">
+                                <a type="button" aria-label="toggle" class="sort-btn" (click)="toggleSortOrder()">
                                     <i *ngIf="sortOrder === 'desc'" class="fas fa-sort-down"></i>
                                     <i *ngIf="sortOrder === 'asc'" class="fas fa-sort-up"></i>
                                 </a>
@@ -205,8 +205,8 @@
 
                         <td class="table-output">
                             <ng-container>
-                                <a type="button" containerClass="customClass">
-                                    <span class="status-icon" *ngIf="isBoardOnline(bd).status">
+                                <a aria-label="gotopage" type="button" containerClass="customClass">
+                                    <span class="status-icons" *ngIf="isBoardOnline(bd).status">
                                         <img [src]="isBoardOnline(bd).icon" />
                                     </span>
                                 </a>
@@ -215,8 +215,8 @@
                         </td>
                         <td class="table-output">
                             <ng-container>
-                                <a type="button" containerClass="customClass">
-                                    <span class="status-icon">
+                                <a aria-label="gotopage" type="button" containerClass="customClass">
+                                    <span class="status-icons">
                                         <img class="stat-icon" *ngFor="let icon of isBoardPassed(bd); let i=index"
                                             [src]="bd.icon[i]" alt="Image" />
                                     </span>

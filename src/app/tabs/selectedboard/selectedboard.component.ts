@@ -63,80 +63,85 @@ export class SelectedboardComponent implements AfterViewInit {
   itemsPerPage: number = 10;
   searchText: string = '';  // Search query for filtering
   selectedBranch: string = 'boot_partition_main'; // Default selection
-  availableBranches: string[] = [];
   filteredBoardDetails: any[] = [];
 
   //#endregion2
+  isCollapsed: { [key: number]: boolean } = {};
 
   constructor(
     private boardsService: BoardsService,
     private route: ActivatedRoute,
-    private router: Router,
-    private viewContainerRef: ViewContainerRef,
-    private renderer: Renderer2
-  ) { }
+    private router: Router // <-- Inject Router service
+
+  ) {}
 
   ngAfterViewInit() {
-  //   if (!this.tooltipLink || !this.tooltipElement) {
-  //     console.error('Tooltip link or template not found!');
-  //     return;
-  //   }
+    //   if (!this.tooltipLink || !this.tooltipElement) {
+    //     console.error('Tooltip link or template not found!');
+    //     return;
+    //   }
 
-  //   new bootstrap.Tooltip(this.tooltipLink.nativeElement, {
-  //     title: () => this.getTooltipContent(),
-  //     html: true,
-  //     placement: 'top'
-  //   });
-  // }
+    //   new bootstrap.Tooltip(this.tooltipLink.nativeElement, {
+    //     title: () => this.getTooltipContent(),
+    //     html: true,
+    //     placement: 'top'
+    //   });
+    // }
 
-  // getTooltipContent(): string {
-  //   // Create a temporary container to hold the template content
-  //   const tempContainer = this.renderer.createElement('div');
+    // getTooltipContent(): string {
+    //   // Create a temporary container to hold the template content
+    //   const tempContainer = this.renderer.createElement('div');
 
-  //   // Render the ng-template inside an embedded view
-  //   const embeddedView = this.tooltipElement.createEmbeddedView({});
-  //   embeddedView.rootNodes.forEach(node => tempContainer.appendChild(node.cloneNode(true)));
+    //   // Render the ng-template inside an embedded view
+    //   const embeddedView = this.tooltipElement.createEmbeddedView({});
+    //   embeddedView.rootNodes.forEach(node => tempContainer.appendChild(node.cloneNode(true)));
 
-  //   return tempContainer.innerHTML; // Extract only the inner HTML without inserting into the DOM
-   }
+    //   return tempContainer.innerHTML; // Extract only the inner HTML without inserting into the DOM
+  }
+
+  toggleCollapse(index: number): void {
+    this.isCollapsed[index] = !this.isCollapsed[index];
+  }
 
   ngOnInit() {
     this.selectedBoard = this.route.snapshot.params['boardName'] || '';
     console.log('Selected Board:', this.selectedBoard);
     this.fetchBoardDetails();
-    this.populateAvailableBranches();
+
 
 
   }
   fetchBoardDetails() {
     this.boardsService.getBoardDetails(this.selectedBoard).subscribe((boards: any[]) => {
+      this.selectedBoardDetails = [...this.dataAggregates];
       // Filter only entries that match the selected board name
       this.selectedBoardDetails = boards.filter((b: any) => b.boot_folder_name === this.selectedBoard);
+      console.log('selectedboarddeateal:', this.selectedBoardDetails);
 
       this.updateDisplayedHistory();
+      this.filterResults(this.searchText);
     });
   }
-  filterResults() {
-    this.filteredBoardDetails = this.dataAggregates.filter(board =>
-      (board.source_adjacency_matrix === this.selectedBranch) &&
-      (this.searchText === '' || 
-        board.jenkins_project_name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        board.boot_folder_name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        board.hdl_hash?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        board.linux_hash?.toLowerCase().includes(this.searchText.toLowerCase()))
-    );
-  }
-  populateAvailableBranches() {
-    this.availableBranches = Array.from(
-      new Set(this.dataAggregates.map(board => board.source_adjacency_matrix))
-    );
-  
-    if (!this.availableBranches.includes('boot_partition_main')) {
-      this.availableBranches.unshift('boot_partition_main');
+
+  filterResults(text: string) {
+    if (!text) {
+      // Reset the boardDetail to the original data
+      this.selectedBoardDetails = [...this.dataAggregates];
+      return;
     }
-  
-    this.filterResults();
+    this.selectedBoardDetails = this.dataAggregates.filter((item) => {
+      return (
+        item.jenkins_build_number?.toLowerCase().includes(text.toLowerCase()) ||
+        item.source_adjacency_matrix?.toLowerCase().includes(text.toLowerCase()) ||
+        item.hdl_hash?.toLowerCase().includes(text.toLowerCase()) ||
+        item.linux_hash?.toLowerCase().includes(text.toLowerCase()) || 
+        item.jenkins_trigger?.toLowerCase().includes(text.toLowerCase()) ||
+        item.boot_test_result?.toLowerCase().includes(text.toLowerCase())
+      );
+    });
+    console.log('selectedboarddeateal:', this.selectedBoardDetails);
   }
+
 
   updateDisplayedHistory() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -173,6 +178,10 @@ export class SelectedboardComponent implements AfterViewInit {
     }
 
     return [1, '...', this.currentPage - 1, this.currentPage, this.currentPage + 1, '...', total];
+  }
+
+  navigateBack(): void {
+    this.router.navigate(['/kuiperlinuxci']);
   }
 
 }

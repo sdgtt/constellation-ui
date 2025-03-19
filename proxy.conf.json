@@ -1,6 +1,6 @@
 {
   "/constellation/api": {
-    "target": "https://10.116.110.150:5000",
+    "target": "https://10.116.110.150:5000/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

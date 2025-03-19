@@ -198,6 +198,19 @@ $grey-p1: #343a40;
       font-size: 25px;
       color: rgb(225, 133, 27);
     }
+    .table-hover {
+      cursor: pointer; /* Makes rows look clickable */
+      transition: background-color 0.3s ease-in-out;
+    }
+    
+    .table-hover:hover {
+      background-color: #f8f9fa; /* Light grey on hover */
+    }
+    
+    .collapse {
+      transition: height 0.3s ease; /* Smooth collapse animation */
+    }
+    
   }
 
   .text-wrap {

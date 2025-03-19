@@ -35,8 +35,8 @@ body {
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
-    background-image: linear-gradient(to right, #ffffff, #282c34);
-    background-image: url(/cons_bg.png);
+    // background-image: linear-gradient(to right, #ffffff, #282c34);
+    // background-image: url(/cons_bg.png);
     
     .text-wrap {
         word-wrap: break-word;
@@ -186,6 +186,7 @@ body {
                     .table-head,
                     thead,
                     th {
+                        text-align: match-parent;
                         font-weight: normal !important;
                         text-align: center;
                         padding: 10px;
@@ -202,7 +203,7 @@ body {
 
                     .sort-btn {
                         font-weight: 900;
-                        color: $grey;
+                        color: $white;
                     }
 
                     tbody>tr:hover {
@@ -218,7 +219,7 @@ body {
                         vertical-align: middle;
 
 
-                        .status-icon {
+                        .status-icons {
                             padding-right: 10px;
                             cursor: pointer;
 
@@ -319,4 +320,3 @@ body {
       font-size: 14px;
     }
   }
-  
