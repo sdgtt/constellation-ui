@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-4">
                     <div class="search-container">
-                        <form>
+                        <!-- <form>
                             <select [(ngModel)]="selectedBranch" [ngModelOptions]="{standalone: true}" (change)="filterResults(searchText)" class="form-select" style="width: 200px;">
                                 <option *ngFor="let branch of source_adjacency_matrix" [value]="branch">
                                     {{ branch }}
@@ -22,7 +22,7 @@
                             <input type="text" placeholder="Search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"
                                 (keyup)="filterResults(searchText)" (keydown.enter)="filterResults(searchText)"
                                 name="search" [ngModelOptions]="{standalone: true}"/>
-                        </form>
+                        </form> -->
                     </div>
 
                 </div>
@@ -170,36 +170,38 @@
                     </div>
                   </div>
                 </div>
+                
+            </div>
+            <div class="nav-container">
+                <!-- Pagination Controls -->
+                <nav *ngIf="getTotalPages() > 1" aria-label="Page navigation">
+                    <ul class="pagination custom-pagination pagination-sm justify-content-end mb-3">
+                        <!-- Previous Button -->
+                        <li class="page-item text-$grey" [class.disabled]="currentPage === 1">
+                            <a class="page-link" aria-label="links" href="#"
+                                (click)="$event.preventDefault(); changePage(currentPage - 1)" aria-label="Previous">
+                                <span aria-hidden="true"><i class="fa-solid fa-backward"></i></span>
+                            </a>
+                        </li>
+                        <!-- Page Numbers -->
+                        <li *ngFor="let page of getPaginationRange()" class="page-item"
+                            [class.active]="currentPage === page" [class.disabled]="page === '...'">
+                            <a class="page-link" aria-label="links" href="#"
+                                (click)="$event.preventDefault(); changePage(page)" *ngIf="page !== '...'">{{ page }}</a>
+                            <span class="page-link" *ngIf="page === '...'"><i class="fa-solid fa-ellipsis"></i></span>
+                        </li>
+                        <!-- Next Button -->
+                        <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
+                            <a class="page-link" aria-label="links" href="#"
+                                (click)="$event.preventDefault(); changePage(currentPage + 1)" aria-label="Next">
+                                <span aria-hidden="true"><i class="fa-solid fa-forward"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
-        <div class="nav-container">
-            <!-- Pagination Controls -->
-            <nav *ngIf="getTotalPages() > 1" aria-label="Page navigation">
-                <ul class="pagination custom-pagination pagination-sm justify-content-end mb-3">
-                    <!-- Previous Button -->
-                    <li class="page-item text-$grey" [class.disabled]="currentPage === 1">
-                        <a class="page-link" aria-label="links" href="#"
-                            (click)="$event.preventDefault(); changePage(currentPage - 1)" aria-label="Previous">
-                            <span aria-hidden="true"><i class="fa-solid fa-backward"></i></span>
-                        </a>
-                    </li>
-                    <!-- Page Numbers -->
-                    <li *ngFor="let page of getPaginationRange()" class="page-item"
-                        [class.active]="currentPage === page" [class.disabled]="page === '...'">
-                        <a class="page-link" aria-label="links" href="#"
-                            (click)="$event.preventDefault(); changePage(page)" *ngIf="page !== '...'">{{ page }}</a>
-                        <span class="page-link" *ngIf="page === '...'"><i class="fa-solid fa-ellipsis"></i></span>
-                    </li>
-                    <!-- Next Button -->
-                    <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
-                        <a class="page-link" aria-label="links" href="#"
-                            (click)="$event.preventDefault(); changePage(currentPage + 1)" aria-label="Next">
-                            <span aria-hidden="true"><i class="fa-solid fa-forward"></i></span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+       
     </div>
 </section>
 <ng-template #noData>

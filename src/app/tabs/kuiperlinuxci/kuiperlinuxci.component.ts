@@ -56,8 +56,8 @@ export class KuiperlinuxciComponent implements AfterViewInit {
   dataAggregates: any[] = [];
   latestData: any = {};
   boardDetail: any[] = [];
-  pstatusIcon: string[] = ['/assets/Online.png', '/assets/Offline.png'];
-  bstatusIcon: string[] = ['/assets/Passed.png', '/assets/nebula.svg', '/assets/linux.svg', '/assets/python.svg'];
+  pstatusIcon: string[] = ['./assets/Online.png', './assets/Offline.png'];
+  bstatusIcon: string[] = ['./assets/Passed.png', './assets/nebula.svg', './assets/linux.svg', './assets/python.svg'];
   sortOrder: 'asc' | 'desc' = 'desc'; // Initialize the sorting order
   statusMessages: string[] = [];
   status: string[] = [];

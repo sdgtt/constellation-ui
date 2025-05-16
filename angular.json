@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "constellation-ui": {
+    "constellation": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -69,17 +69,13 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "proxyConfig": "proxy.conf.json",
-            "ssl": true,
-            "sslCert": "ssl/cert.crt",
-            "sslKey": "ssl/cert.key"          
           },
           "configurations": {
             "production": {
-              "buildTarget": "constellation-ui:build:production"
+              "buildTarget": "constellation:build:production"
             },
             "development": {
-              "buildTarget": "constellation-ui:build:development"
+              "buildTarget": "constellation:build:development"
             }
           },
           "defaultConfiguration": "development"

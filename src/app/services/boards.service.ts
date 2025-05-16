@@ -24,9 +24,12 @@ export class BoardsService {
     );
   }
   getBoardDetails(boardName: string): Observable<any[]> {
-    const httpUrl = `${environment.apiUrl}/api/board/${boardName}`;
+    const httpUrl = `${environment.apiUrl}/api/board/${boardName}/`;
 
-    return this.httpClient.get<any>(httpUrl).pipe(
+    return this.httpClient.get<any>(httpUrl, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      withCredentials: false // Set to true if using authentication cookies
+    }).pipe(
       map((response: any) => response.hits || [])  // Ensuring the property exists or return an empty array
     );
   }
